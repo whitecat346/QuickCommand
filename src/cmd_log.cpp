@@ -34,80 +34,80 @@ void SetCmdColor(std::string color)
 
 void Logger::Info(std::string msg)
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Warn(std::string msg)
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Error(std::string msg)
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Fata(std::string msg)
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Info(char msg[])
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Warn(char msg[])
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Error(char msg[])
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
 }
 
 void Logger::Fata(char msg[])
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
 }
 
 void Logger::operator<<(std::string msg)
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
 
 void Logger::operator<<(char msg[])
 {
-	if (fileName.size() != 0)
-		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
+	if (loggerName.size() != 0)
+		std::cout << "[" << CoutTime << "] [" << loggerName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 	else
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }

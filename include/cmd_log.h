@@ -14,9 +14,6 @@ public:
 	Logger(char name[]) : loggerName(name) {};
 	~Logger() {};
 
-	void LogFile(std::string fname);
-	void LogFile(char fname[]);
-
 	void Error(std::string msg);
 	void Info(std::string msg);
 	void Warn(std::string msg);
@@ -34,7 +31,6 @@ public:
 
 private:
 	std::string loggerName;
-	std::string fileName;
 };
 
 // ESC
