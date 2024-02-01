@@ -8,9 +8,13 @@
 #include "include/argv.h"
 #include "include/cmd_log.h"
 
+// Software Path
+std::string appPath;
+
 int main(int argc, char** argv)
 {
 	Logger qc("QuickCommand");
+	appPath = argv[0];
 
 	try
 	{
@@ -21,8 +25,6 @@ int main(int argc, char** argv)
 		qc.Fata("Should have command, but it is not!");
 		return 1;
 	}
-
-
 
 	return 0;
 }

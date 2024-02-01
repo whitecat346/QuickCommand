@@ -3,6 +3,8 @@
 #include <exception>
 #include <string>
 
+extern std::string appPath;
+
 // Exception
 namespace erro
 {
@@ -57,12 +59,19 @@ void Command(int ac, char** av)
 
 void RunCom(std::string head, std::string com)
 {
+	Logger rc("RunTime");
+
 	try
 	{
-		
+		if (com.at(0) != '-')
+			throw erro::no_future_infoamtion();
 	}
-	catch (erro::no_future_infoamtion)
+	catch (erro::no_future_infoamtion nfi)
 	{
+		rc.Error(nfi.what("File Command should begin with \'-\', but it is not!"));
+		exit(1);
 	}
+
+	
 }
 
