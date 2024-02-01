@@ -142,7 +142,6 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="argv.h" />
     <ClInclude Include="include\argv.h" />
     <ClInclude Include="include\cmd_log.h" />
     <ClInclude Include="include\json.hpp" />
