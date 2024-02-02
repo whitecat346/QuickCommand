@@ -1,4 +1,5 @@
 #include "../include/argv.h"
+#include "../include/runtime.h"
 #include "../include/cmd_log.h"
 #include <exception>
 #include <string>
@@ -91,7 +92,6 @@ void Command(const int& ac, const char**& av)
 
 void RunCom(const std::vector<std::string> head, const std::string com)
 {
-	Logger rc("RunTime");
 	std::string filePath(appPath);
 
 	for (auto it : head)
@@ -100,4 +100,6 @@ void RunCom(const std::vector<std::string> head, const std::string com)
 
 	if (!com.find(".qc") && !com.at(com.size() - 3) == '.')
 		filePath.append(".qc");
+
+	loadFile(filePath);
 }
