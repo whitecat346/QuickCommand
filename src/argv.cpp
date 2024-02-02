@@ -36,7 +36,7 @@ namespace erro
 	};
 }
 
-void Command(const int ac, const char** av)
+void Command(const int& ac, const char**& av)
 {
 	Logger t("Command");
 
@@ -62,10 +62,10 @@ void Command(const int ac, const char** av)
 	t << "Loading...";
 
 	std::vector<std::string> command, headCommand;
-	for ( int i = 0; i < ac; i ++ )
+	for (int i = 0; i < ac; i++)
 		command.push_back(av[i]);
 
-	for ( int i = 0; i < command.size(); i ++ )
+	for (int i = 0; i < command.size(); i++)
 	{
 		if (command.at(i)[0] != '-')
 			headCommand.push_back(command.at(i));
@@ -87,8 +87,6 @@ void Command(const int ac, const char** av)
 			headCommand.clear();
 		}
 	}
-
-	t << "Finish!";
 }
 
 void RunCom(const std::vector<std::string> head, const std::string com)
@@ -96,6 +94,10 @@ void RunCom(const std::vector<std::string> head, const std::string com)
 	Logger rc("RunTime");
 	std::string filePath(appPath);
 
-	
-}
+	for (auto it : head)
+		filePath.append("\\" + it);
+	filePath.append("\\" + com);
 
+	if (!com.find(".qc") && !com.at(com.size() - 3) == '.')
+		filePath.append(".qc");
+}
