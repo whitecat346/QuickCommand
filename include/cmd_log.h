@@ -10,25 +10,25 @@ class Logger
 {
 public:
 	Logger() {};
-	Logger(std::string name) : loggerName(name) {};
-	Logger(char name[]) : loggerName(name) {};
+	Logger(const std::string name) : loggerName(name) {};
+	Logger(const char name[]) : loggerName(name) {};
 	~Logger() {};
 
-	void LogFile(std::string fname);
-	void LogFile(char fname[]);
+	void LogFile(const std::string fname);
+	void LogFile(const char fname[]);
 
-	void Error(std::string msg);
-	void Info(std::string msg);
-	void Warn(std::string msg);
-	void Fata(std::string msg);
+	void Error(const std::string msg);
+	void Info(const std::string msg);
+	void Warn(const std::string msg);
+	void Fata(const std::string msg);
 
-	void Error(char msg[]);
-	void Info(char msg[]);
-	void Warn(char msg[]);
-	void Fata(char msg[]);
+	void Error(const char msg[]);
+	void Info(const char msg[]);
+	void Warn(const char msg[]);
+	void Fata(const char msg[]);
 
-	void operator<< (std::string msg);
-	void operator<< (char msg[]);
+	void operator<< (const std::string msg);
+	void operator<< (const char msg[]);
 
 	
 

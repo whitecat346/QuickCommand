@@ -3,7 +3,7 @@
 #include <exception>
 #include <string>
 
-extern std::string appPath;
+extern const std::string appPath;
 
 // Exception
 namespace erro
@@ -17,17 +17,26 @@ namespace erro
 		}
 	};
 
-	class file_command_error : public std::exception
+	class command_end_erro : public std::exception
 	{
 	public:
 		char const* what() const throw()
 		{
-			return "File Command Error: The file command should begin with \'-\'";
+			return "The end of command should begin with \'-\' !";
+		}
+	};
+
+	class head_command_erro : public std::exception
+	{
+	public:
+		char const* what(const char* info) const throw()
+		{
+			return info;
 		}
 	};
 }
 
-void Command(int ac, char** av)
+void Command(const int ac, const char** av)
 {
 	Logger t("Command");
 
@@ -37,40 +46,55 @@ void Command(int ac, char** av)
 			throw erro::no_future_infoamtion();
 
 		if (std::string(av[ac]).at(0) != '-')
-			throw erro::file_command_error();
+			throw erro::command_end_erro();
 	}
 	catch (erro::no_future_infoamtion nfi)
 	{
 		t.Error(nfi.what("The value of (int)argc should not 1"));
 		exit(1);
 	}
-	catch (erro::file_command_error fce)
+	catch (erro::command_end_erro cee)
 	{
-		t.Error(fce.what());
+		t.Error(cee.what());
 		exit(1);
 	}
-	
-	// Command: qc git -gitignone
+
 	t << "Loading...";
 
-	for ( int i = 0; i < ac; i += 2 )
-		RunCom(av[i], av[(i + 1)]);
+	std::vector<std::string> command, headCommand;
+	for ( int i = 0; i < ac; i ++ )
+		command.push_back(av[i]);
+
+	for ( int i = 0; i < command.size(); i ++ )
+	{
+		if (command.at(i)[0] != '-')
+			headCommand.push_back(command.at(i));
+		else
+		{
+			try
+			{
+				if (command.at(++i)[0] == '-')
+					throw erro::head_command_erro();
+			}
+			catch (erro::head_command_erro hce)
+			{
+				t.Error(hce.what("Head Command should begin with \'-\' , but it is not!"));
+				exit(1);
+			}
+
+			RunCom(headCommand, command.at(i));
+
+			headCommand.clear();
+		}
+	}
+
+	t << "Finish!";
 }
 
-void RunCom(std::string head, std::string com)
+void RunCom(const std::vector<std::string> head, const std::string com)
 {
 	Logger rc("RunTime");
-
-	try
-	{
-		if (com.at(0) != '-')
-			throw erro::no_future_infoamtion();
-	}
-	catch (erro::no_future_infoamtion nfi)
-	{
-		rc.Error(nfi.what("File Command should begin with \'-\', but it is not!"));
-		exit(1);
-	}
+	std::string filePath(appPath);
 
 	
 }

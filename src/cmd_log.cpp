@@ -27,12 +27,12 @@ std::string CoutTime()
 }
 
 
-void SetCmdColor(std::string color)
+void SetCmdColor(const std::string color)
 {
 	std::cout << color;
 }
 
-void Logger::Info(std::string msg)
+void Logger::Info(const std::string msg)
 {
 	if (fileName.size() != 0)
 		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
@@ -40,7 +40,7 @@ void Logger::Info(std::string msg)
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Warn(std::string msg)
+void Logger::Warn(const std::string msg)
 {
 	if (fileName.size() != 0)
 		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
@@ -48,7 +48,7 @@ void Logger::Warn(std::string msg)
 		std::cerr << "[" << CoutTime << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Error(std::string msg)
+void Logger::Error(const std::string msg)
 {
 	if (fileName.size() != 0)
 		std::cerr << "[" << CoutTime << "] [" << fileName << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
@@ -56,7 +56,7 @@ void Logger::Error(std::string msg)
 		std::cerr << "[" << CoutTime << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Fata(std::string msg)
+void Logger::Fata(const std::string msg)
 {
 	if (fileName.size() != 0)
 		std::cerr << "[" << CoutTime << "] [" << fileName << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
@@ -64,7 +64,7 @@ void Logger::Fata(std::string msg)
 		std::cerr << "[" << CoutTime << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Info(char msg[])
+void Logger::Info(const char msg[])
 {
 	if (fileName.size() != 0)
 		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
@@ -72,7 +72,7 @@ void Logger::Info(char msg[])
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Warn(char msg[])
+void Logger::Warn(const char msg[])
 {
 	if (fileName.size() != 0)
 		std::cerr << "[" << CoutTime << "] [" << fileName << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
@@ -80,7 +80,7 @@ void Logger::Warn(char msg[])
 		std::cerr << "[" << CoutTime << "] " << P_YELLOW "[WARN]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Error(char msg[])
+void Logger::Error(const char msg[])
 {
 	if (fileName.size() != 0)
 		std::cerr << "[" << CoutTime << "] [" << fileName << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
@@ -88,7 +88,7 @@ void Logger::Error(char msg[])
 		std::cerr << "[" << CoutTime << "] " << P_MAGENTA "[ERROR]" DEFAULT << msg << std::endl;
 }
 
-void Logger::Fata(char msg[])
+void Logger::Fata(const char msg[])
 {
 	if (fileName.size() != 0)
 		std::cerr << "[" << CoutTime << "] [" << fileName << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
@@ -96,7 +96,7 @@ void Logger::Fata(char msg[])
 		std::cerr << "[" << CoutTime << "] " << P_RED "[FATA]" DEFAULT << msg << std::endl;
 }
 
-void Logger::operator<<(std::string msg)
+void Logger::operator<<(const std::string msg)
 {
 	if (fileName.size() != 0)
 		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
@@ -104,7 +104,7 @@ void Logger::operator<<(std::string msg)
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
 
-void Logger::operator<<(char msg[])
+void Logger::operator<<(const char msg[])
 {
 	if (fileName.size() != 0)
 		std::cout << "[" << CoutTime << "] [" << fileName << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;

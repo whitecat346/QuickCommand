@@ -24,6 +24,12 @@
     <ClCompile Include="src\cmd_log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\argv.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\runtime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -38,6 +44,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\cmd_log.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\argv.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\runtime.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
