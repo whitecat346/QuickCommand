@@ -38,4 +38,13 @@ namespace erro
 			return "Threw a error when load " + *file + *" . Reason: " + *reason;
 		}
 	};
+
+	class file_command_error : public std::exception
+	{
+	public:
+		char const* what(const char* info) const throw()
+		{
+			return info;
+		}
+	};
 }

@@ -51,12 +51,12 @@ void loadFile(const std::string& filePath)
 #define END_HEAD 41
 #define END_INFO 125
 
-unsigned int lineInCommandFile = 0;
+unsigned int lineInCommandFile = 1;
 
 void runCommand(const std::string& command)	// read file to run command
 {
 	std::string comm, head, info;
-	bool inIndex = false;	// in command
+	bool inIndex = false, commandEnd = false;	// in command & end
 	unsigned short type = NULL;	// info type
 
 	for ( auto it : command )
@@ -76,6 +76,11 @@ void runCommand(const std::string& command)	// read file to run command
 
 				continue;
 			}
+			else if (commandEnd == true)
+			{
+				if (it != COMMAND || it != HEAD || it != INFO)
+					throw erro::file_command_error();
+			}
 
 			if (it == COMMAND || it == HEAD || it == INFO)	// command head
 			{
@@ -83,7 +88,7 @@ void runCommand(const std::string& command)	// read file to run command
 				inIndex = true;
 				continue;
 			}
-			else if (it == END_COMMAND || it == END_HEAD || it == END_INFO)
+			else if (it == END_COMMAND || it == END_HEAD || it == END_INFO)	// the end of command
 			{
 				type == NULL;
 				inIndex == false;
@@ -101,7 +106,11 @@ void runCommand(const std::string& command)	// read file to run command
 			rt.Error(nfi.what("Got an error message! Position: runCommand (*void) Reason: The value of (short) type is error."));
 			exit(1);
 		}
-
+		catch (erro::file_command_error fce)
+		{
+			rt.Error(fce.what("No future information. In line " + lineInCommandFile));
+			exit(1);
+		}
 	}
 }
 
