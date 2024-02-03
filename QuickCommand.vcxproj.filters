@@ -52,5 +52,8 @@
     <ClInclude Include="include\runtime.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\erro.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

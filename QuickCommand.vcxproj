@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="include\argv.h" />
     <ClInclude Include="include\cmd_log.h" />
+    <ClInclude Include="include\erro.h" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\str.h" />
     <ClInclude Include="include\runtime.h" />
