@@ -37,30 +37,63 @@ void loadFile(const std::string& filePath)
 
 void fileCommand::Print(std::string& command, std::string& head, std::string& info)
 {
-	if (command.find('>'))	// if have double command
+	std::cout << info << std::endl;	// cout info
+
+	if (command.contains('>'))	// if have double command
 	{
-		std::string temp(command, command.find('>'));
+		std::string temp(command, command.find('>'));	// get double command
 		while (true)
 		{
-			if (temp.at(0) == ' ') temp.erase(temp.begin());
+			if (temp.at(0) == ' ') temp.erase(temp.begin());	// no space
 			else if (temp.at(temp.size()) == ' ') temp.erase(temp.end() - 1);
 			else break;
 		}
+		command = temp;
 
 		try
 		{
-			if (!functionIndex.contains(command))
+			if (!functionIndex.contains(command))	// not find command
 				throw erro::file_command_not_found();
+			else functionIndex.at(command) (command, head, info);	// call command
 		}
 		catch (erro::file_command_not_found fcnf)
 		{
 			rt.Error(fcnf.what("Command Not Found! In line " + lineInCommandFile));
 			exit(1);
 		}
-
-		std::cout << info << std::endl;
 	}
 }
+
+void fileCommand::Creat(std::string& command, std::string& head, std::string& info)
+{
+
+
+
+	if (command.contains('>'))	// have double command
+	{
+		std::string temp(command, command.find('>'));	// get double command
+		while (true)
+		{
+			if (temp.at(0) == ' ') temp.erase(temp.begin());	// no space
+			else if (temp.at(temp.size()) == ' ') temp.erase(temp.end() - 1);
+			else break;
+		}
+		command = temp;
+
+		try
+		{
+			if (!functionIndex.contains(command))	// not find command
+				throw erro::file_command_not_found();
+			else functionIndex.at(command) (command, head, info);	// call command
+		}
+		catch (erro::file_command_not_found fcnf)
+		{
+			rt.Error(fcnf.what("Command Not Found! In line " + lineInCommandFile));
+			exit(1);
+		}
+	}
+}
+
 
 constexpr short COMMAND = 91;
 constexpr short HEAD = 40;
@@ -127,14 +160,14 @@ void runCommand(const std::string& command)	// read file to run command
 				{
 					auto getFunctionIndex = [&](const std::string& temp)->std::string
 						{
-							if (temp.find(' '))
+							if (temp.contains(' '))
 								return std::string(temp, temp.find(' '));
-							else if (temp.find('>'))
+							else if (temp.contains('>'))
 								return std::string(temp, temp.find('>'));
 							else return temp;
 						};
 					std::string functionIndexTemp = getFunctionIndex(comm);
-					if (fileCommand::functionIndex.find(functionIndexTemp) != fileCommand::functionIndex.end())
+					if (fileCommand::functionIndex.contains(functionIndexTemp))
 						fileCommand::functionIndex.at(functionIndexTemp)(comm, head, info);
 					else throw erro::file_command_not_found();
 				}
