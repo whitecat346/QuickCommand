@@ -67,21 +67,27 @@ void fileCommand::Print(std::string& command, std::string& head, std::string& in
 
 void fileCommand::Creat(std::string& command, std::string& head, std::string& info)
 {
-	std::ofstream outFile(head);	// out file stream
-
 	if (head.contains('/') || head.contains('\\'))	// need create folder
 	{
-		std::string fileName;
-		if (head.contains('/'))	// get file name
-			fileName = std::string(head, head.rfind('/'));
-		else fileName = std::string(head, head.rfind('\\'));
-
-		auto getLastFlash = [&](std::string& temp)->std::string
-			{
-
-			};
-		CreateDirectory((LPCWSTR)std::string((getLastFlash(head))).c_str(), NULL);
+		try
+		{
+			if (head.contains('/'))	// create file folder
+				if (!CreateDirectory((LPCWSTR)std::string(head, 0, head.rfind('/')).c_str(), NULL))
+					throw erro::create_folder_error();
+				else
+					if (!CreateDirectory((LPCWSTR)std::string(head, 0, head.rfind('\\')).c_str(), NULL))
+						throw erro::create_folder_error();
+		}
+		catch (erro::create_folder_error cfe)
+		{
+			rt.Error(cfe.what("Throw a error when create folder: " + *std::string(head, 0, head.rfind('\\')).c_str()));
+			exit(1);
+		}
 	}
+
+	std::ofstream outFile(head);	// out file stream
+	outFile << info;
+	outFile.close();
 
 	if (command.contains('>'))	// have double command
 	{

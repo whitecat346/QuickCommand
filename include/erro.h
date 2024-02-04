@@ -56,4 +56,15 @@ namespace erro
 			return info;
 		}
 	};
+
+	class create_folder_error : public std::exception
+	{
+	public:
+		char const* what(const char* info) const throw()
+		{
+			return info;
+		}
+	};
+
+	class 
 }
