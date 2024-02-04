@@ -1,24 +1,15 @@
 #include "../include/runtime.h"
 #include <exception>
 #include <fstream>
+#include <iostream>
 #include <map>
 
 #include "../include/erro.h"
 #include "../include/cmd_log.h"
 
-typedef void(*fun) (std::string head, std::string info);	// Function pointer
-namespace fileCommand	// command
-{
-	void Print(std::string head, std::string info);
-	void Creat(std::string head, std::string info);
-	void Write(std::string head, std::string info);
-	void Read(std::string head, std::string info);
-
-	static std::map<std::string, fun> functionIndex = { {"print", fileCommand::Print},{ "creat", fileCommand::Creat },
-		{ "read", fileCommand::Read}, {"write", fileCommand::Write} };
-}
-
 Logger rt("RunTime");	// create logger named RunTime
+unsigned int lineInCommandFile = 1;	// File line
+
 void loadFile(const std::string& filePath)
 {
 	std::ifstream comFile(filePath);	// create ifstream for load command file
@@ -44,6 +35,33 @@ void loadFile(const std::string& filePath)
 	runCommand(com);
 }
 
+void fileCommand::Print(std::string& command, std::string& head, std::string& info)
+{
+	if (command.find('>'))	// if have double command
+	{
+		std::string temp(command, command.find('>'));
+		while (true)
+		{
+			if (temp.at(0) == ' ') temp.erase(temp.begin());
+			else if (temp.at(temp.size()) == ' ') temp.erase(temp.end() - 1);
+			else break;
+		}
+
+		try
+		{
+			if (!functionIndex.contains(command))
+				throw erro::file_command_not_found();
+		}
+		catch (erro::file_command_not_found fcnf)
+		{
+			rt.Error(fcnf.what("Command Not Found! In line " + lineInCommandFile));
+			exit(1);
+		}
+
+		std::cout << info << std::endl;
+	}
+}
+
 constexpr short COMMAND = 91;
 constexpr short HEAD = 40;
 constexpr short INFO = 123;
@@ -51,15 +69,13 @@ constexpr short END_COMMAND = 93;
 constexpr short END_HEAD = 41;
 constexpr short END_INFO = 125;
 
-unsigned int lineInCommandFile = 1;
-
 void runCommand(const std::string& command)	// read file to run command
 {
 	std::string comm, head, info;
 	bool inIndex = false, commandEnd = false;	// in command & end
 	unsigned short type = NULL, endType = NULL;	// info type
 
-	for ( auto it : command )
+	for (auto it : command)
 	{
 		try
 		{
@@ -103,8 +119,6 @@ void runCommand(const std::string& command)	// read file to run command
 				continue;
 			}
 
-
-
 			// next line
 			if (it == '\n')
 			{
@@ -121,7 +135,7 @@ void runCommand(const std::string& command)	// read file to run command
 						};
 					std::string functionIndexTemp = getFunctionIndex(comm);
 					if (fileCommand::functionIndex.find(functionIndexTemp) != fileCommand::functionIndex.end())
-						fileCommand::functionIndex.at(functionIndexTemp);
+						fileCommand::functionIndex.at(functionIndexTemp)(comm, head, info);
 					else throw erro::file_command_not_found();
 				}
 			}
@@ -143,4 +157,3 @@ void runCommand(const std::string& command)	// read file to run command
 		}
 	}
 }
-
