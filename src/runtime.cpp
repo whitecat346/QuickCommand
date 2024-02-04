@@ -1,6 +1,7 @@
 #include "../include/runtime.h"
 #include <exception>
 #include <fstream>
+#include <Windows.h>
 #include <iostream>
 #include <map>
 
@@ -66,8 +67,21 @@ void fileCommand::Print(std::string& command, std::string& head, std::string& in
 
 void fileCommand::Creat(std::string& command, std::string& head, std::string& info)
 {
+	std::ofstream outFile(head);	// out file stream
 
+	if (head.contains('/') || head.contains('\\'))	// need create folder
+	{
+		std::string fileName;
+		if (head.contains('/'))	// get file name
+			fileName = std::string(head, head.rfind('/'));
+		else fileName = std::string(head, head.rfind('\\'));
 
+		auto getLastFlash = [&](std::string& temp)->std::string
+			{
+
+			};
+		CreateDirectory((LPCWSTR)std::string((getLastFlash(head))).c_str(), NULL);
+	}
 
 	if (command.contains('>'))	// have double command
 	{
