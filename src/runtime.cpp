@@ -44,12 +44,12 @@ void loadFile(const std::string& filePath)
 	runCommand(com);
 }
 
-#define COMMAND 91
-#define HEAD 40
-#define INFO 123
-#define END_COMMAND 93
-#define END_HEAD 41
-#define END_INFO 125
+constexpr short COMMAND = 91;
+constexpr short HEAD = 40;
+constexpr short INFO = 123;
+constexpr short END_COMMAND = 93;
+constexpr short END_HEAD = 41;
+constexpr short END_INFO = 125;
 
 unsigned int lineInCommandFile = 1;
 
@@ -57,7 +57,7 @@ void runCommand(const std::string& command)	// read file to run command
 {
 	std::string comm, head, info;
 	bool inIndex = false, commandEnd = false;	// in command & end
-	unsigned short type = NULL;	// info type
+	unsigned short type = NULL, endType = NULL;	// info type
 
 	for ( auto it : command )
 	{
@@ -78,9 +78,19 @@ void runCommand(const std::string& command)	// read file to run command
 			}
 			else if (commandEnd == true)
 			{
-				if (it != COMMAND || it != HEAD || it != INFO)
+				if (endType == END_INFO)
+				{
+					endType == NULL;
+					continue;
+				}
+				else if (endType == END_HEAD && (it != '\n' || it != INFO))
 					throw erro::file_command_error();
-			}
+				else if (endType == END_COMMAND && it != HEAD)
+					throw erro::file_command_error();
+
+			/*	if (it != COMMAND || it != HEAD || it != INFO)
+					throw erro::file_command_error();
+			*/}
 
 			if (it == COMMAND || it == HEAD || it == INFO)	// command head
 			{
@@ -91,6 +101,7 @@ void runCommand(const std::string& command)	// read file to run command
 			else if (it == END_COMMAND || it == END_HEAD || it == END_INFO)	// the end of command
 			{
 				type == NULL;
+				endType = it;
 				inIndex == false;
 				continue;
 			}
@@ -99,7 +110,24 @@ void runCommand(const std::string& command)	// read file to run command
 
 			// next line
 			if (it == '\n')
+			{
 				lineInCommandFile++;
+				if (inIndex == false)
+				{
+					auto getFunctionIndex = [&](const std::string& temp)->std::string
+						{
+							if (temp.find(' '))
+								return std::string(temp, temp.find(' '));
+							else if (temp.find('>'))
+								return std::string(temp, temp.find('>'));
+							else return temp;
+						};
+					std::string functionIndexTemp = getFunctionIndex(comm);
+					if (fileCommand::functionIndex.find(functionIndexTemp) != fileCommand::functionIndex.end())
+						fileCommand::functionIndex.at(functionIndexTemp);
+					else throw erro::file_command_not_found();
+				}
+			}
 		}
 		catch (erro::no_future_infoamtion nfi)
 		{
@@ -109,6 +137,11 @@ void runCommand(const std::string& command)	// read file to run command
 		catch (erro::file_command_error fce)
 		{
 			rt.Error(fce.what("No future information. In line " + lineInCommandFile));
+			exit(1);
+		}
+		catch (erro::file_command_not_found fcnf)
+		{
+			rt.Error(fcnf.what("Not Found Command in line " + lineInCommandFile));
 			exit(1);
 		}
 	}

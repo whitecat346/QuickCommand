@@ -47,4 +47,13 @@ namespace erro
 			return info;
 		}
 	};
+
+	class file_command_not_found : public std::exception
+	{
+	public:
+		char const* what(const char* info) const throw()
+		{
+			return info;
+		}
+	};
 }
