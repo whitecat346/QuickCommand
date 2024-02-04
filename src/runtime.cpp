@@ -76,21 +76,18 @@ void runCommand(const std::string& command)	// read file to run command
 
 				continue;
 			}
-			else if (commandEnd == true)
+			else if (commandEnd == true)	// if command error throw file command error
 			{
-				if (endType == END_INFO)
-				{
+				if (endType == END_INFO)	// { }
 					endType == NULL;
-					continue;
-				}
-				else if (endType == END_HEAD && (it != '\n' || it != INFO))
+				else if (endType == END_HEAD && (it != '\n' || it != INFO))	// ( )
 					throw erro::file_command_error();
-				else if (endType == END_COMMAND && it != HEAD)
+				else if (endType == END_COMMAND && it != HEAD)	// [ ]
 					throw erro::file_command_error();
 
-			/*	if (it != COMMAND || it != HEAD || it != INFO)
-					throw erro::file_command_error();
-			*/}
+				commandEnd = false;
+				continue;
+			}
 
 			if (it == COMMAND || it == HEAD || it == INFO)	// command head
 			{
