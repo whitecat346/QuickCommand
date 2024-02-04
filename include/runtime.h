@@ -4,7 +4,7 @@
 #include <map>
 
 void loadFile(const std::string& filePath);
-void runCommand(std::string& command);
+void runCommand(const std::string& command);
 
 namespace fileCommand
 {

@@ -21,7 +21,7 @@ void RunCom(const std::vector<std::string> head, const std::string com)
 	loadFile(filePath);	// call loadFile (*void)
 }
 
-void Command(const int& ac, const char**& av)
+void Command(int ac, char** av)
 {
 	Logger t("Command");	// create logger named command
 
