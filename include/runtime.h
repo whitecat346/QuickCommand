@@ -13,7 +13,6 @@ namespace fileCommand
 	void Write(std::string& command, std::string& head, std::string& info);
 	void Read(std::string& command, std::string& head, std::string& info);
 
-
 	typedef void(*fun) (std::string& command, std::string& head, std::string& info);	// Function pointer
 	static std::map<std::string, fun> functionIndex = { {"print", fileCommand::Print},{ "creat", fileCommand::Creat },
 		{ "read", fileCommand::Read}, {"write", fileCommand::Write} };

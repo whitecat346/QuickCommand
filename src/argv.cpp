@@ -5,7 +5,21 @@
 #include <exception>
 #include <string>
 
-extern const std::string appPath;	// QuickCommand running path. equal main.cpp
+extern std::string appPath;	// QuickCommand running path. equal main.cpp
+
+void RunCom(const std::vector<std::string> head, const std::string com)
+{
+	std::string filePath(appPath);	// create command file (string)
+
+	for (auto it : head)
+		filePath.append("\\" + it);	// append file path
+	filePath.append("\\" + com);
+
+	if (!com.find(".qc") && !com.at(com.size() - 3) == '.')	// .qc or not
+		filePath.append(".qc");
+
+	loadFile(filePath);	// call loadFile (*void)
+}
 
 void Command(const int& ac, const char**& av)
 {
@@ -58,18 +72,4 @@ void Command(const int& ac, const char**& av)
 			headCommand.clear();	// clear headCommand (vector) used for next
 		}
 	}
-}
-
-void RunCom(const std::vector<std::string> head, const std::string com)
-{
-	std::string filePath(appPath);	// create command file (string)
-
-	for (auto it : head)
-		filePath.append("\\" + it);	// append file path
-	filePath.append("\\" + com);
-
-	if (!com.find(".qc") && !com.at(com.size() - 3) == '.')	// .qc or not
-		filePath.append(".qc");
-
-	loadFile(filePath);	// call loadFile (*void)
 }

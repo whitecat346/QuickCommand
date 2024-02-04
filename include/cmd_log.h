@@ -30,8 +30,6 @@ public:
 	void operator<< (const std::string msg);
 	void operator<< (const char msg[]);
 
-	
-
 private:
 	std::string loggerName;
 	std::string fileName;
@@ -86,4 +84,4 @@ private:
 
 void SetCmdColor(std::string color);
 
-std::string CoutTime();
+void CoutTime();

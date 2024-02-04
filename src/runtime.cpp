@@ -11,31 +11,6 @@
 Logger rt("RunTime");	// create logger named RunTime
 unsigned int lineInCommandFile = 1;	// File line
 
-void loadFile(const std::string& filePath)
-{
-	std::ifstream comFile(filePath);	// create ifstream for load command file
-
-	try
-	{
-		if (!comFile.is_open())
-			throw erro::no_load_file();
-	}
-	catch (erro::no_load_file nlf)	// can not open the command file
-	{
-		std::string file(filePath, filePath.rfind('\\'));	// file name
-		rt.Error(nlf.what(file.c_str(), "Can not open the file!"));
-	}
-	// load file info
-	/*std::vector<std::string> fileInfomation;*/	// have every line of command file
-	std::string fileInfo, com;
-	while (std::getline(comFile, fileInfo))
-		com.append(fileInfo);
-	fileInfo.clear();
-	comFile.close();
-
-	runCommand(com);
-}
-
 void fileCommand::Print(std::string& command, std::string& head, std::string& info)
 {
 	std::cout << info << std::endl;	// cout info
@@ -187,7 +162,6 @@ void fileCommand::Write(std::string& command, std::string& head, std::string& in
 	}
 }
 
-
 constexpr short COMMAND = 91;
 constexpr short HEAD = 40;
 constexpr short INFO = 123;
@@ -221,7 +195,7 @@ void runCommand(const std::string& command)	// read file to run command
 			else if (commandEnd == true)	// if command error throw file command error
 			{
 				if (endType == END_INFO)	// { }
-					endType == NULL;
+					endType = NULL;
 				else if (endType == END_HEAD && (it != '\n' || it != INFO))	// ( )
 					throw erro::file_command_error();
 				else if (endType == END_COMMAND && it != HEAD)	// [ ]
@@ -239,9 +213,9 @@ void runCommand(const std::string& command)	// read file to run command
 			}
 			else if (it == END_COMMAND || it == END_HEAD || it == END_INFO)	// the end of command
 			{
-				type == NULL;
+				type = NULL;
 				endType = it;
-				inIndex == false;
+				inIndex = false;
 				continue;
 			}
 
@@ -282,4 +256,29 @@ void runCommand(const std::string& command)	// read file to run command
 			exit(1);
 		}
 	}
+}
+
+void loadFile(const std::string& filePath)
+{
+	std::ifstream comFile(filePath);	// create ifstream for load command file
+
+	try
+	{
+		if (!comFile.is_open())
+			throw erro::no_load_file();
+	}
+	catch (erro::no_load_file nlf)	// can not open the command file
+	{
+		std::string file(filePath, filePath.rfind('\\'));	// file name
+		rt.Error(nlf.what(file.c_str(), "Can not open the file!"));
+	}
+	// load file info
+	/*std::vector<std::string> fileInfomation;*/	// have every line of command file
+	std::string fileInfo, com;
+	while (std::getline(comFile, fileInfo))
+		com.append(fileInfo);
+	fileInfo.clear();
+	comFile.close();
+
+	runCommand(com);
 }

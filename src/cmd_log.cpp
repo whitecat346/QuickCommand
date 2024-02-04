@@ -19,13 +19,12 @@ tm GetSystemTime()
 	return temp;
 }
 
-std::string CoutTime()
+void CoutTime()
 {
 	tm tmm = GetSystemTime();
 	std::cout << tmm.tm_year + 1900 << "/" << tmm.tm_mon << "/" << tmm.tm_mday
-	<< " " << tmm.tm_hour << ":" << tmm.tm_min << ":" << tmm.tm_sec;
+		<< " " << tmm.tm_hour << ":" << tmm.tm_min << ":" << tmm.tm_sec;
 }
-
 
 void SetCmdColor(const std::string color)
 {
@@ -111,4 +110,3 @@ void Logger::operator<<(const char msg[])
 	else
 		std::cout << "[" << CoutTime << "] " << P_GREEN "[INFO]" DEFAULT << msg << std::endl;
 }
-
