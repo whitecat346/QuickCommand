@@ -66,5 +66,12 @@ namespace erro
 		}
 	};
 
-	class 
+	class should_double_command : public std::exception
+	{
+	public:
+		char const* what() const throw()
+		{
+			return "Should have double command!";
+		}
+	};
 }

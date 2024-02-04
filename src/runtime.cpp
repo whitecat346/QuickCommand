@@ -114,6 +114,79 @@ void fileCommand::Creat(std::string& command, std::string& head, std::string& in
 	}
 }
 
+void fileCommand::Read(std::string& command, std::string& head, std::string& info)
+{
+	try
+	{
+		if (!head.contains('>'))	// command read should double command
+			throw erro::should_double_command();
+	}
+	catch (erro::should_double_command sdc)
+	{
+		rt.Error(sdc.what());
+		exit(1);
+	}
+
+	std::ifstream fileInfo(head);
+	{
+		std::string temp;
+		info.clear();
+		while (std::getline(fileInfo, temp))	// get file information
+			info.append(temp);
+	}
+
+	std::string temp(command, command.find('>'));	// get double command
+	while (true)
+	{
+		if (temp.at(0) == ' ') temp.erase(temp.begin());	// no space
+		else if (temp.at(temp.size()) == ' ') temp.erase(temp.end() - 1);
+		else break;
+	}
+	command = temp;
+
+	try
+	{
+		if (!functionIndex.contains(command))	// not find command
+			throw erro::file_command_not_found();
+		else functionIndex.at(command) (command, head, info);	// call command
+	}
+	catch (erro::file_command_not_found fcnf)
+	{
+		rt.Error(fcnf.what("Command Not Found! In line " + lineInCommandFile));
+		exit(1);
+	}
+}
+
+void fileCommand::Write(std::string& command, std::string& head, std::string& info)
+{
+	std::ofstream outFile(head);	// write file
+	outFile << info;
+
+	if (command.contains('>'))	// have double command
+	{
+		std::string temp(command, command.find('>'));	// get double command
+		while (true)
+		{
+			if (temp.at(0) == ' ') temp.erase(temp.begin());	// no space
+			else if (temp.at(temp.size()) == ' ') temp.erase(temp.end() - 1);
+			else break;
+		}
+		command = temp;
+
+		try
+		{
+			if (!functionIndex.contains(command))	// not find command
+				throw erro::file_command_not_found();
+			else functionIndex.at(command) (command, head, info);	// call command
+		}
+		catch (erro::file_command_not_found fcnf)
+		{
+			rt.Error(fcnf.what("Command Not Found! In line " + lineInCommandFile));
+			exit(1);
+		}
+	}
+}
+
 
 constexpr short COMMAND = 91;
 constexpr short HEAD = 40;
